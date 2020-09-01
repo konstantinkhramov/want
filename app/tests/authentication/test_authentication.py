@@ -10,7 +10,9 @@ class AuthenticationTests(APITestCase):
             Ensure we can create a new account object.
         """
         url = reverse('register')
-        data = {'username': 'new_user',
-                'password': 'qwerty12345678'}
+        data = {"username": "kostya",
+                "password": "12345678qwerty"}
+
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        v = 1

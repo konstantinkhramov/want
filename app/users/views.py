@@ -20,10 +20,9 @@ def register(request):
     '''
     # Put the data from the request into the serializer
     serializer = CreateUserSerializer(data=request.data)
-    # If it is valid, save the data (creates a user).
     if serializer.is_valid():
-        serializer.save()
-        a = User.objects.all()
+        # If it is valid, save the data (creates a user).
+        serializer.create(serializer.validated_data)
         # Then we get a token for the created user.
         # This could be done differentley
         r = requests.post('http://localhost:8000/o/token/',
