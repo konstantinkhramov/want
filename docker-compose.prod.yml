@@ -2,12 +2,12 @@ version: '3.7'
 services:
   web:
     build:
-      context: app
+      context: django_want
       dockerfile: Dockerfile.prod
     command: gunicorn app.wsgi:application --bind 0.0.0.0:8000
     volumes:
-    - ./app/static:/home/app/web/static
-    - ./app/media:/home/app/web/media
+    - ./django_want/static:/home/django_want/web/static
+    - ./django_want/media:/home/django_want/web/media
     expose:
       - 8000
     env_file:
@@ -23,8 +23,8 @@ services:
   nginx:
     build: ./nginx
     volumes:
-    - static:/home/app/web/static
-    - media:/home/app/web/media
+    - static:/home/django_want/web/static
+    - media:/home/django_want/web/media
     ports:
       - 1337:80
     depends_on:

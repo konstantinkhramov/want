@@ -1,0 +1,1 @@
+from .test_authorization import AuthenticationTests

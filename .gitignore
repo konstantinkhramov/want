@@ -1,8 +1,9 @@
 # ignore venv
 .idea
-/env/
 /.env.dev
 /.env.prod
 /db.sqlite3
 /.env.prod.db
 /export.env
+/django_want/venv/
+/postgres_data/
