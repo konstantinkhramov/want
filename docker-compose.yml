@@ -1,6 +1,6 @@
 version: '3.7'
 services:
-  web:
+  want:
     image: registry.gitlab.com/khramovkonstantin94/want:latest
     build: django_want
     command: python manage.py runserver 0.0.0.0:8000

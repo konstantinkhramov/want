@@ -1,6 +1,6 @@
 version: '3.7'
 services:
-  web:
+  want:
     build:
       context: django_want
       dockerfile: Dockerfile.prod
@@ -28,7 +28,7 @@ services:
     ports:
       - 1337:80
     depends_on:
-      - web
+      - want
 volumes:
   postgres_data:
   static:

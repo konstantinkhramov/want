@@ -1,7 +1,7 @@
-from django.contrib.auth.models import User
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
+from django_want.settings import HOST
 
 import requests
 
@@ -46,7 +46,7 @@ def token(request):
     {"username": "username", "password": "1234abcd"}
     '''
     r = requests.post(
-        'http://0.0.0.0:8000/o/token/',
+        f'http://{HOST}:8000/o/token/',
         data={
             'grant_type': 'password',
             'username': request.data['username'],
@@ -66,7 +66,7 @@ def refresh_token(request):
     {"refresh_token": "<token>"}
     '''
     r = requests.post(
-        'http://0.0.0.0:8000/o/token/',
+        f'http://{HOST}:8000/o/token/',
         data={
             'grant_type': 'refresh_token',
             'refresh_token': request.data['refresh_token'],
@@ -85,7 +85,7 @@ def revoke_token(request):
     {"token": "<token>"}
     '''
     r = requests.post(
-        'http://0.0.0.0:8000/o/revoke_token/',
+        f'http://{HOST}:8000/o/revoke_token/',
         data={
             'token': request.data['token'],
             'client_id': CLIENT_ID,

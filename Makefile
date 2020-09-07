@@ -13,8 +13,8 @@ endef
 
 define build_docker
 	$(if $(1), echo $(1), echo 'services list is not defined'; exit 1)
-	docker-compose -f docker-compose.yml build "$1"
-	docker-compose -f docker-compose.yml push "$1"
+	docker-compose -f docker-compose.yml -f docker-compose.prod.yml build "$1"
+	docker-compose push "$1"
 endef
 
 define run_ansible
@@ -33,8 +33,8 @@ build-image-handler:  ## Build and push image handler
 build-mail-service:  ## Build and push mail service
 	@$(call build_docker,"mail-service")
 
-build-detalkin:  ## Build and push detalkin
-	@$(call build_docker,"detalkin")
+build-want:  ## Build and push detalkin
+	@$(call build_docker,"want")
 
 help:
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'

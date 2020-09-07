@@ -1,27 +1,3 @@
-# from django.test import TestCase
-#
-#
-# class AuthorizationTest(TestCase):
-#     @classmethod
-#     def setUpTestData(cls):
-#         print("setUpTestData: Run once to set up non-modified data for all class methods.")
-#         pass
-#
-#     def setUp(self):
-#         print("setUp: Run once for every test method to setup clean data.")
-#         pass
-#
-#     def test_false_is_false(self):
-#         print("Method: test_false_is_false.")
-#         self.assertFalse(False)
-#
-#     def test_false_is_true(self):
-#         print("Method: test_false_is_true.")
-#         self.assertTrue(False)
-#
-#     def test_one_plus_one_equals_two(self):
-#         print("Method: test_one_plus_one_equals_two.")
-#         self.assertEqual(1 + 1, 2)
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
@@ -38,4 +14,51 @@ class AuthenticationTests(APITestCase):
                 "password": "12345678qwerty"}
 
         response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_get_token(self):
+        """"
+            Тест получения токена существующего пользователя
+        """
+
+        url = reverse('token')
+        data = {"username": "kostya",
+                "password": "12345678qwerty"}
+
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_refresh_token(self):
+        """"
+            Тест обновления токена
+        """
+
+        url = reverse('token')
+        data = {"username": "kostya",
+                "password": "12345678qwerty"}
+        response = self.client.post(url, data, format='json')
+
+        url = reverse('refresh_token')
+        data = {'refresh_token': response.data['refresh_token']}
+        response = self.client.post(url, data, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_revoke_token(self):
+        """"
+            Тестирование овтязки токена
+        """
+
+        url_token = reverse('token')
+        data_token = {"username": "kostya",
+                      "password": "12345678qwerty"}
+
+        response = self.client.post(url_token, data_token, format='json')
+
+        url_revoke = reverse('revoke_token')
+        data_revoke = {
+            'token': response.data['access_token']
+        }
+
+        response = self.client.post(url_revoke, data_revoke, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
