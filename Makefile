@@ -25,7 +25,7 @@ endef
 all: help
 
 run-services:  ## Run related services
-	@$(call run_docker,"db want")
+	@$(call run_docker,"db")
 
 build-image-handler:  ## Build and push image handler
 	@$(call build_docker,"image-handler")

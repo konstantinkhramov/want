@@ -7,3 +7,5 @@
 /export.env
 /django_want/venv/
 /postgres_data/
+/.env.debug
+app/__pycache__
