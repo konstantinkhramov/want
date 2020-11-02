@@ -1,14 +1,27 @@
-from rest_framework.response import Response
+import requests
+from oauth2_provider.models import Application
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
-from django_want.settings import HOST
-
-import requests
+from rest_framework.response import Response
 
 from .serializers import CreateUserSerializer
 
-CLIENT_ID = 'oOvIyUdp7bzbFc0uzCDn15VgaY22wSeQmjKY7zbA'
-CLIENT_SECRET = '4YwIGSxDTYFD4RJLASED0fyPVMrasN8mf5TIqQjTMgRW30v5n3Sp8B7agbcdMZhipwQWHEmmpJITU4K8iDBtdkPU89J0GHbAnmAtDoDZOp01H3ogd55r1Iu8hqUlL6bV'
+from django.contrib.auth.models import User
+
+
+
+app_aouth = Application.objects.first()
+if not app_aouth:
+    admin = User.objects.filter(username='admin').first()
+    app_aouth = Application(user=admin,
+    client_type='confidential',
+    authorization_grant_type='password',
+    name='django_want'
+    )
+    app_aouth.save()
+
+CLIENT_ID = app_aouth.client_id
+CLIENT_SECRET = app_aouth.client_secret
 
 
 @api_view(['POST'])
@@ -46,7 +59,7 @@ def token(request):
     {"username": "username", "password": "1234abcd"}
     '''
     r = requests.post(
-        f'http://{HOST}:8000/o/token/',
+        f'http://localhost:8000/o/token/',
         data={
             'grant_type': 'password',
             'username': request.data['username'],
@@ -66,7 +79,7 @@ def refresh_token(request):
     {"refresh_token": "<token>"}
     '''
     r = requests.post(
-        f'http://{HOST}:8000/o/token/',
+        f'http://localhost:8000/o/token/',
         data={
             'grant_type': 'refresh_token',
             'refresh_token': request.data['refresh_token'],
@@ -85,7 +98,7 @@ def revoke_token(request):
     {"token": "<token>"}
     '''
     r = requests.post(
-        f'http://{HOST}:8000/o/revoke_token/',
+        f'http://localhost:8000/o/revoke_token/',
         data={
             'token': request.data['token'],
             'client_id': CLIENT_ID,
