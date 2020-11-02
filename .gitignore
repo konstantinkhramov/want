@@ -10,3 +10,4 @@
 /.env.debug
 app/__pycache__
 .vscode
+.env
