@@ -8,6 +8,6 @@
 /django_want/venv/
 /postgres_data/
 /.env.debug
-app/__pycache__
 .vscode
 /env/
+**/__pycache__/ 
