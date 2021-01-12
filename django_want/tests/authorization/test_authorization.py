@@ -61,7 +61,7 @@ class AuthenticationTests(APITestCase):
 
         return access_token
 
-    def test_get_token_acces(self):
+    def test_get_token_access(self):
         """
             Ensure we can create a new account object.
         """
@@ -91,8 +91,8 @@ class AuthenticationTests(APITestCase):
 
         url = reverse('oauth2_provider:token')
         data = {'grant_type': Application.GRANT_PASSWORD,
-                'username': 'admin',
-                'password': '123',
+                'username': 'qwrrw',
+                'password': 'asfasfa',
                 'client_id': CLIENT_ID,
                 'client_secret': CLIENT_SECRET
                 }
@@ -107,3 +107,15 @@ class AuthenticationTests(APITestCase):
         response = self.client.get(reverse('users'))
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_create_user(self):
+        data = {
+            'username': 'kostya',
+            'password': '123',
+            'email': '',
+            'first_name': 'Константин',
+            'last_name': 'Храмов'
+        }
+        response = self.client.post(reverse('user_create'), data)
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)

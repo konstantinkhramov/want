@@ -57,6 +57,11 @@ def register(request):
     return Response(serializer.errors)
 
 
+class UserCreate(generics.CreateAPIView):
+    permission_classes = [permissions.AllowAny]
+    serializer_class = UserSerializer
+
+
 class UserList(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
     queryset = User.objects.all()
