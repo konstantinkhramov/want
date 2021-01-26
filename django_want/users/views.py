@@ -17,7 +17,7 @@ class UserList(generics.ListCreateAPIView):
     serializer_class = UserFullSerializer
 
 
-class UserDetails(generics.RetrieveAPIView):
+class UserDetails(generics.RetrieveAPIView, generics.DestroyAPIView, generics.UpdateAPIView):
     permission_classes = [permissions.IsAuthenticated]
     queryset = User.objects.all()
     serializer_class = UserSerializer
