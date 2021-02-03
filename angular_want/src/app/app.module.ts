@@ -1,12 +1,11 @@
-import { NgModule }      from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { AppComponent }   from './app.component';
-
-import { HomeComponent } from './home/home.component';
-import {AppRoutingModule} from "./app-routing.module";
-import {APP_BASE_HREF} from "@angular/common";
+import {NgModule} from "@angular/core";
+import {BrowserModule} from "@angular/platform-browser";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
+import {AppRoutingModule} from "./app-routing.module";
+import {AppComponent} from "./app.component";
+import {HomeComponent} from "./home/home.component";
+import {APP_BASE_HREF} from "@angular/common";
 
 
 @NgModule({
@@ -22,7 +21,7 @@ import {HttpClientModule} from "@angular/common/http";
         HomeComponent,
     ],
     providers: [
-        {provide: APP_BASE_HREF, useValue : '/' }
+        {provide: APP_BASE_HREF, useValue: window['_app_base'] || '/' }
     ],
     bootstrap: [
         AppComponent
