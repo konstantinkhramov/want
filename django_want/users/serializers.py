@@ -1,21 +1,9 @@
 from rest_framework import serializers
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import Group
+from django.contrib.auth import get_user_model
+from rest_framework.authtoken.models import Token
 
-
-class CreateUserSerializer(serializers.ModelSerializer):
-
-    def create(self, validated_data):
-        username = validated_data.get('username')
-        password = validated_data.get('password')
-        return User.objects.create_user(username=username,
-                                        password=password)
-
-    class Meta:
-        model = User
-        fields = ('id', 'username', 'password')
-        extra_kwargs = {
-            'password': {'write_only': True}
-        }
+User = get_user_model()
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -23,16 +11,29 @@ class UserSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         username = validated_data.get('username')
         password = validated_data.get('password')
-        email = validated_data.get('email')
-        first_name = validated_data.get('first_name')
-        last_name = validated_data.get('last_name')
+        user = User.objects.create_user(username=username,
+                                        password=password)
+        token = Token.objects.create(user=user)
+        token.save()
+        user.token = token.key
+        user.save()
 
-        return User.objects.create_user(username=username, email=email, password=password,
-                                        first_name=first_name, last_name=last_name)
+        return user
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'first_name', 'last_name')
+        fields = ('id', 'username', 'token')
+
+
+class UserFullSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id',
+                  'username',
+                  'first_name',
+                  'last_name',
+                  'email',
+                  'is_active')
 
 
 class GroupSerializer(serializers.ModelSerializer):
