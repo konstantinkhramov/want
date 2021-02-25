@@ -27,12 +27,6 @@ all: help
 run-services:  ## Run related services
 	@$(call run_docker,"db")
 
-build-image-handler:  ## Build and push image handler
-	@$(call build_docker,"image-handler")
-
-build-mail-service:  ## Build and push mail service
-	@$(call build_docker,"mail-service")
-
 build-want:  ## Build and push detalkin
 	@$(call build_docker,"want")
 
