@@ -1,6 +1,6 @@
 from django.contrib.auth.models import Group
 from rest_framework import generics, permissions
-from .serializers import GroupSerializer, UserSerializer, UserFullSerializer
+from .serializers import GroupSerializer, UserSerializer, UserFullSerializer, UserCreateSerialize
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -8,7 +8,7 @@ User = get_user_model()
 
 class UserCreate(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
-    serializer_class = UserSerializer
+    serializer_class = UserCreateSerialize
 
 
 class UserList(generics.ListCreateAPIView):
