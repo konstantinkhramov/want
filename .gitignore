@@ -12,3 +12,4 @@
 /env/
 **/__pycache__/ 
 /.env.export
+/angular_want/package-lock.json
