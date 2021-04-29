@@ -11,6 +11,7 @@ export class LoginComponent implements OnInit {
     form: FormGroup;
     loading = false;
     submitted = false;
+    error = null;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -22,8 +23,8 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {
         this.form = this.formBuilder.group({
-            username: ['', Validators.required],
-            password: ['', Validators.required]
+            username: ['', Validators.compose([Validators.email, Validators.required])],
+            password: ['', Validators.compose([Validators.minLength(8), Validators.required])]
         });
     }
 
@@ -51,7 +52,8 @@ export class LoginComponent implements OnInit {
                     this.router.navigateByUrl(returnUrl);
                 },
                 error: error => {
-                    this.alertService.error(error);
+                    this.alertService.error(error.error.message);
+                    this.error = error.error.message
                     this.loading = false;
                 }
             });

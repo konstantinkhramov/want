@@ -13,10 +13,8 @@ class AuthenticationTests(APITestCase):
         data = {
             'username': 'kostya',
             'password': '123',
-            'first_name': 'Константин',
-            'last_name': 'Храмов',
         }
-        response = self.client.post(reverse('user_create'), data)
+        response = self.client.post(reverse('user_register'), data)
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
@@ -26,4 +24,14 @@ class AuthenticationTests(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + user.token)
         response = self.client.get(reverse('users'))
         json_object = response.json()
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_login_user(self):
+        self.test_create_user()
+        data = {
+            'username': 'kostya',
+            'password': '123'
+        }
+
+        response = self.client.post(reverse('user_login'), data=data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
