@@ -6,6 +6,7 @@ import {AppRoutingModule} from "./app-routing.module";
 import {AppComponent} from "./app.component";
 import {HomeComponent} from "./home/home.component";
 import {APP_BASE_HREF} from "@angular/common";
+import {SignupComponent} from "./signup/signup.component";
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import {APP_BASE_HREF} from "@angular/common";
     declarations: [
         AppComponent,
         HomeComponent,
+        SignupComponent
     ],
     providers: [
         {provide: APP_BASE_HREF, useValue: window['_app_base'] || '/' }
