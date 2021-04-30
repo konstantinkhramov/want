@@ -6,6 +6,9 @@ import {AccountService} from "../_services/account.service";
 
 @Component({ templateUrl: 'layout.component.html' })
 export class LayoutComponent {
+    test : Date = new Date();
+    focus;
+    focus1;
     constructor(
         private router: Router,
         private accountService: AccountService

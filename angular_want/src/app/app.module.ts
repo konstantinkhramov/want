@@ -8,6 +8,8 @@ import {HomeComponent} from "./home/home.component";
 import {APP_BASE_HREF} from "@angular/common";
 import {SignupComponent} from "./signup/signup.component";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import {FooterComponent} from "./shared/footer/footer.component";
+import {NavbarComponent} from "./shared/navbar/navbar.component";
 
 
 @NgModule({
@@ -21,6 +23,8 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
     ],
     declarations: [
         AppComponent,
+        FooterComponent,
+        NavbarComponent,
         HomeComponent,
         SignupComponent
     ],

@@ -1,9 +1,11 @@
 <div class="card">
-    <h4 class="card-header">Register</h4>
+    <div class="card-header">
+        <h4>Register</h4>
+    </div>
     <div class="card-body">
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
             <div class="form-group">
-                <label for="username">Username</label>
+                <label for="username">Email</label>
                 <input type="text" formControlName="username" class="form-control"
                        [ngClass]="{ 'is-invalid': submitted && f.username.errors }"/>
                 <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
@@ -30,3 +32,55 @@
         </form>
     </div>
 </div>
+<!--<div class="filter"></div>-->
+<!--<div class="container">-->
+<!--    <div class="row">-->
+<!--        <div class="col-lg-12 col-sm-12 mr-auto ml-auto">-->
+<!--            <div class="card card-register">-->
+<!--                <h3 class="title">Welcome</h3>-->
+<!--&lt;!&ndash;                <div class="social-line text-center">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <a href="#pablo" class="btn btn-neutral btn-facebook btn-just-icon">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <i class="fa fa-facebook-square"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </a>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <a href="#pablo" class="btn btn-neutral btn-google btn-just-icon">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <i class="fa fa-google-plus"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </a>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <a href="#pablo" class="btn btn-neutral btn-twitter btn-just-icon">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <i class="fa fa-twitter"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </a>&ndash;&gt;-->
+<!--&lt;!&ndash;                </div>&ndash;&gt;-->
+<!--                <form [formGroup]="form" (ngSubmit)="onSubmit()" class="register-form">-->
+<!--                    <label>Email</label>-->
+<!--                    <div class="input-group form-group-no-border" [ngClass]="{'input-group-focus':focus===true}">-->
+<!--                        <div class="input-group-prepend">-->
+<!--                                  <span class="input-group-text">-->
+<!--                                      <i class="nc-icon nc-email-85"></i>-->
+<!--                                  </span>-->
+<!--                        </div>-->
+
+<!--                        <input type="text" formControlName="username" class="form-control" placeholder="Email"-->
+<!--                               (focus)="focus=true" (blur)="focus=false">-->
+<!--                    </div>-->
+
+<!--                    <label>Password</label>-->
+<!--                    <div class="input-group form-group-no-border" [ngClass]="{'input-group-focus':focus1===true}">-->
+<!--                        <div class="input-group-prepend">-->
+<!--                                  <span class="input-group-text">-->
+<!--                                      <i class="nc-icon nc-key-25"></i>-->
+<!--                                  </span>-->
+<!--                        </div>-->
+<!--                        <input type="text" formControlName="password" class="form-control" placeholder="Password"-->
+<!--                               (focus)="focus1=true" (blur)="focus1=false">-->
+<!--                    </div>-->
+<!--                    <button class="btn btn-danger btn-block btn-round">Register</button>-->
+<!--                </form>-->
+<!--                <div class="forgot">-->
+<!--                    <a href="#" class="btn btn-link btn-danger">Forgot password?</a>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="footer register-footer text-center">-->
+<!--        <h6>&copy;{{test | date: 'yyyy'}}, made with <i class="fa fa-heart heart"></i> by Creative Tim</h6>-->
+<!--    </div>-->
+<!--</div>-->
