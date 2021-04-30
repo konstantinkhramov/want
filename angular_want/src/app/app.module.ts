@@ -7,6 +7,7 @@ import {AppComponent} from "./app.component";
 import {HomeComponent} from "./home/home.component";
 import {APP_BASE_HREF} from "@angular/common";
 import {SignupComponent} from "./signup/signup.component";
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import {SignupComponent} from "./signup/signup.component";
         ReactiveFormsModule,
         HttpClientModule,
         AppRoutingModule,
+        NgbModule
     ],
     declarations: [
         AppComponent,
