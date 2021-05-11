@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
@@ -12,14 +12,27 @@ import {environment} from "../../enviroments/environment";
 export class AccountService {
     private userSubject: BehaviorSubject<User>;
     public user: Observable<User>;
+    private loggedIn: BehaviorSubject<boolean>;
 
     constructor(private router: Router, private http: HttpClient) {
         this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
         this.user = this.userSubject.asObservable();
+        if (localStorage.getItem('user')) {
+            console.log('yes')
+            this.loggedIn = new BehaviorSubject<boolean>(true);
+        } else {
+            console.log('no');
+            this.loggedIn = new BehaviorSubject<boolean>(false);
+        }
+
     }
 
     public get userValue(): User {
         return this.userSubject.value;
+    }
+
+    public get isLoggedIn() {
+        return this.loggedIn.asObservable();
     }
 
     login(username, password) {
@@ -28,6 +41,7 @@ export class AccountService {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 localStorage.setItem('user', JSON.stringify(user));
                 this.userSubject.next(user);
+                this.loggedIn.next(true);
                 return user;
             }));
     }
@@ -36,6 +50,7 @@ export class AccountService {
         // remove user from local storage and set current user to null
         localStorage.removeItem('user');
         this.userSubject.next(null);
+        this.loggedIn.next(false);
         this.router.navigate(['/account/login']);
     }
 
