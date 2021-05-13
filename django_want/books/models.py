@@ -15,9 +15,17 @@ class Books(models.Model):
     create_date = models.DateTimeField(auto_now_add=True)
     description = models.TextField()
 
+    class Meta:
+        verbose_name = 'book'
+        verbose_name_plural = 'books'
+
 
 class Chapters(models.Model):
     """Модель описание главы"""
     book_id = models.ForeignKey(Books, on_delete=models.CASCADE)
     caption = models.CharField(max_length=255)
     description = models.TextField()
+
+    class Meta:
+        verbose_name = 'chapter'
+        verbose_name_plural = 'chapters'
