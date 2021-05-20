@@ -4,14 +4,18 @@ from rest_framework import status
 
 
 # Create your tests here.
+from users.models import User
 from .models import Author
 
 
 class AuthorTest(test.APITestCase):
 
     def setUp(self) -> None:
+        User.objects.create_user(username=f'kostya', password='123')
+        self.user = User.objects.get(username='kostya')
         self.author = Author(name='NameFirstTest', last_name='LastNameFirstTest')
         self.author.save()
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.user.token)
 
     def test_create_author(self):
         data = {
@@ -57,4 +61,5 @@ class AuthorTest(test.APITestCase):
 
         author_list = list(Author.objects.all())
 
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(author_list, [])

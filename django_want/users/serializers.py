@@ -13,10 +13,6 @@ class UserSerializer(serializers.ModelSerializer):
         password = validated_data.get('password')
         user = User.objects.create_user(username=username,
                                         password=password)
-        token = Token.objects.create(user=user)
-        token.save()
-        user.token = token.key
-        user.save()
 
         return user
 
