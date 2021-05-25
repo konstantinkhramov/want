@@ -22,9 +22,22 @@ class Books(models.Model):
         verbose_name_plural = 'books'
 
 
+class Parts(models.Model):
+    """Модель описания частей в книге"""
+    book_id = models.ForeignKey(Books, on_delete=models.CASCADE)
+    caption = models.CharField(max_length=255)
+    order_id = models.IntegerField(default=0)
+
+    class Meta:
+        verbose_name = 'part'
+        verbose_name_plural = 'chapters'
+
+
 class Chapters(models.Model):
     """Модель описание главы"""
     book_id = models.ForeignKey(Books, on_delete=models.CASCADE)
+    part_id = models.ForeignKey(Parts, on_delete=models.CASCADE, null=True)
+    order_id = models.IntegerField(default=0)
     caption = models.CharField(max_length=255)
     description = models.TextField()
 
