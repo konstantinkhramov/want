@@ -30,13 +30,13 @@ class Parts(models.Model):
 
     class Meta:
         verbose_name = 'part'
-        verbose_name_plural = 'chapters'
+        verbose_name_plural = 'parts'
 
 
 class Chapters(models.Model):
     """Модель описание главы"""
     book_id = models.ForeignKey(Books, on_delete=models.CASCADE)
-    part_id = models.ForeignKey(Parts, on_delete=models.CASCADE, null=True)
+    part_id = models.ForeignKey(Parts, on_delete=models.CASCADE, blank=True, null=True, default=None)
     order_id = models.IntegerField(default=0)
     caption = models.CharField(max_length=255)
     description = models.TextField()
