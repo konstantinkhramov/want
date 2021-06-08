@@ -30,18 +30,6 @@ class BookView(RetrieveUpdateDestroyAPIView):
     queryset = Books.objects.all()
     serializer_class = BookSerializerFull
 
-    @action(detail=True)
-    def chapters(self, request, pk=None, *args, **kwargs):
-        queryset = Chapters.objects.filter(book_id=pk)
-        if chapter_id := kwargs.get('chapter_id'):
-            queryset = queryset.filter(chapter_id)
-        queryset = queryset.all()
-        serializer = ChapterSerializer(queryset,
-                                       context={'request': request},
-                                       many=True
-                                       )
-        return Response(serializer.data)
-
 
 class BookViewSet(viewsets.ModelViewSet):
     # permission_classes = [permissions.IsAuthenticated]
