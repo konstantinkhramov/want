@@ -79,18 +79,31 @@ class BookViewSet(viewsets.ModelViewSet):
 
             return Response(status=status.HTTP_201_CREATED)
 
-    @action(detail=True)
+    @action(detail=True, methods=['get', 'post'])
     def parts(self, request, pk=None, *args, **kwargs):
-        if parts_id := kwargs.get('parts_id'):
-            queryset = Parts.objects.get(pk=parts_id)
-            serializer = PartsSerializer(queryset,
-                                         context={'request': request},
-                                         many=False
-                                         )
-        else:
-            queryset = Parts.objects.filter(book_id=pk).all()
-            serializer = PartsSerializer(queryset,
-                                         context={'request': request},
-                                         many=True
-                                         )
-        return Response(serializer.data)
+        if request.method == 'GET':
+            if parts_id := kwargs.get('parts_id'):
+                queryset = Parts.objects.get(pk=parts_id)
+                serializer = PartsSerializer(queryset,
+                                             context={'request': request},
+                                             many=False
+                                             )
+            else:
+                queryset = Parts.objects.filter(book_id=pk).all()
+                serializer = PartsSerializer(queryset,
+                                             context={'request': request},
+                                             many=True
+                                             )
+            return Response(serializer.data)
+        if request.method == 'POST':
+            data = request.data
+            book = Books.objects.get(pk=pk)
+            max_order_id = Parts.objects \
+                .filter(book_id=pk) \
+                .aggregate(max_order_id=Max('order_id')) \
+                .get('max_order_id', 0)
+            part = Parts(caption=data.get('caption'),
+                         order_id=data.get('order_id', max_order_id))
+            book.parts_set.add(part, bulk=False)
+
+            return Response(status=status.HTTP_201_CREATED)
