@@ -70,7 +70,7 @@ class BookViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['get', 'post'])
     def parts(self, request, pk=None, *args, **kwargs):
         if request.method == 'GET':
-            if parts_id := kwargs.get('parts_id'):
+            if parts_id := kwargs.get('part_id'):
                 queryset = Parts.objects.get(pk=parts_id)
                 serializer = PartsSerializer(queryset,
                                              context={'request': request},
@@ -84,14 +84,30 @@ class BookViewSet(viewsets.ModelViewSet):
                                              )
             return Response(serializer.data)
         if request.method == 'POST':
-            data = request.data
-            book = Books.objects.get(pk=pk)
-            max_order_id = Parts.objects \
-                .filter(book_id=pk) \
-                .aggregate(max_order_id=Max('order_id')) \
-                .get('max_order_id', 0)
-            part = Parts(caption=data.get('caption'),
-                         order_id=data.get('order_id', max_order_id))
-            book.parts_set.add(part, bulk=False)
+            if part_id := kwargs.get('part_id'):
+                data = request.data
+                part = Parts.objects.get(pk=part_id)
+                max_order_id = Chapters.objects \
+                    .filter(book_id=pk,
+                            part_id__book_id=part_id) \
+                    .aggregate(max_order_id=Max('order_id')) \
+                    .get('max_order_id', 0)
+                chapter = Chapters(book_id=part.book_id,
+                                   caption=data.get('caption'),
+                                   description=data.get('description'),
+                                   order_id=data.get('order_id', max_order_id))
+                part.chapters_set.add(chapter, bulk=False)
 
-            return Response(status=status.HTTP_201_CREATED)
+                return Response(status=status.HTTP_201_CREATED)
+            else:
+                data = request.data
+                book = Books.objects.get(pk=pk)
+                max_order_id = Parts.objects \
+                    .filter(book_id=pk) \
+                    .aggregate(max_order_id=Max('order_id')) \
+                    .get('max_order_id', 0)
+                part = Parts(caption=data.get('caption'),
+                             order_id=data.get('order_id', max_order_id))
+                book.parts_set.add(part, bulk=False)
+
+                return Response(status=status.HTTP_201_CREATED)
