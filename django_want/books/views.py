@@ -16,7 +16,7 @@ class BookList(ListCreateAPIView):
         Представление получения списка всех книг.
     """
 
-    # permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
     queryset = Books.objects.all()
     serializer_class = BooksSerializer
 

@@ -9,13 +9,12 @@ from users.models import User
 class Books(models.Model):
     """Модель описывающая книги"""
 
-    author_id = models.ForeignKey(Author, on_delete=models.SET_NULL, null=True)
+    author_id = models.ForeignKey(Author, on_delete=models.SET_NULL, null=True, blank=True)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, null=False)
     book_caption = models.CharField(max_length=225)
-    rating = models.IntegerField(validators=[MinValueValidator(0),
-                                             MaxValueValidator(5)])
+    rating = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(5)], null=True, blank=True)
     create_date = models.DateTimeField(auto_now_add=True)
-    description = models.TextField()
+    description = models.TextField(blank=True)
 
     class Meta:
         verbose_name = 'book'
