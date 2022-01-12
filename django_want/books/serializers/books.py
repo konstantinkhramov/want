@@ -3,6 +3,7 @@ from author.serializers import AuthorSerializer
 from .chapters import ChapterSerializer
 from ..models import Books
 
+
 class BooksSerializer(serializers.ModelSerializer):
     class Meta:
         model = Books
